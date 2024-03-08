@@ -1,0 +1,25 @@
+import cv2
+
+# Function to perform segmentation based on threshold values
+def segment_image(image_path, lower_threshold, upper_threshold):
+    # Read the input image
+    image = cv2.imread(image_path)
+    
+    # Convert the image to grayscale
+    gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    
+    # Apply thresholding to segment the image
+    _, segmented_image = cv2.threshold(gray_image, lower_threshold, upper_threshold, cv2.THRESH_BINARY)
+    
+    return segmented_image
+
+# Example usage
+image_path = 'input_image.jpg'
+lower_threshold = 100
+upper_threshold = 255
+segmented_image = segment_image(image_path, lower_threshold, upper_threshold)
+
+# Display the segmented image
+cv2.imshow('Segmented Image', segmented_image)
+cv2.waitKey(0)
+cv2.destroyAllWindows()

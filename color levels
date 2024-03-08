@@ -1,0 +1,24 @@
+pip install matplotlib
+
+
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+
+def analyze_histogram(image_path):
+    image = cv2.imread(image_path)
+    
+    channels = cv2.split(image)
+    colors = ('b', 'g', 'r')
+
+    for channel, color in zip(channels, colors):
+        histogram = cv2.calcHist([channel], [0], None, [256], [0, 256])
+        plt.plot(histogram, color=color)
+        plt.xlim([0, 256])
+    
+    plt.xlabel('Color level')
+    plt.ylabel('Frequency')
+    plt.title('Histogram Analysis')
+    plt.show()
+image_path = "C:/Users/padmapriya/OneDrive/Pictures/cheerful-cute-dog-white-background_1308-132745.jpg"
+analyze_histogram(image_path)

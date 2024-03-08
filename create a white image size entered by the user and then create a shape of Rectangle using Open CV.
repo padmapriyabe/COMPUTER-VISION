@@ -1,0 +1,30 @@
+import numpy as np
+import cv2
+
+# Function to create a white image with a rectangle
+def create_white_image_with_rectangle():
+    # Get image dimensions from the user
+    width = int(input("Enter the width of the image: "))
+    height = int(input("Enter the height of the image: "))
+    
+    # Create a white image
+    white_image = np.ones((height, width, 3), dtype=np.uint8) * 255
+    
+    # Calculate rectangle parameters
+    start_point = (width // 4, height // 4)
+    end_point = (width * 3 // 4, height * 3 // 4)
+    color = (0, 0, 0)  # Black color
+    thickness = 2
+    
+    # Draw rectangle on the white image
+    cv2.rectangle(white_image, start_point, end_point, color, thickness)
+    
+    return white_image
+
+# Example usage
+image_with_rectangle = create_white_image_with_rectangle()
+
+# Display the image with the rectangle
+cv2.imshow('Image with Rectangle', image_with_rectangle)
+cv2.waitKey(0)
+cv2.destroyAllWindows()

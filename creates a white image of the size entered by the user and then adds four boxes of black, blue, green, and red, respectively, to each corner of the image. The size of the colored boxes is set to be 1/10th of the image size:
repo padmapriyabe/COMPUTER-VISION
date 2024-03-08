@@ -1,0 +1,43 @@
+
+import numpy as np
+import cv2
+
+# Function to create a white image with colored boxes on each corner
+def create_image_with_colored_boxes():
+    # Get image dimensions from the user
+    width = int(input("Enter the width of the image: "))
+    height = int(input("Enter the height of the image: "))
+    
+    # Create a white image
+    white_image = np.ones((height, width, 3), dtype=np.uint8) * 255
+    
+    # Calculate the size of colored boxes (1/10th the size of the image)
+    box_size = min(width, height) // 10
+    
+    # Define colors for the boxes
+    colors = [(0, 0, 0), (255, 0, 0), (0, 255, 0), (0, 0, 255)]  # Black, Blue, Green, Red
+    
+    # Add colored boxes to each corner of the image
+    for i, color in enumerate(colors):
+        # Calculate the position of the box
+        if i == 0:  # Top-left corner
+            x, y = 0, 0
+        elif i == 1:  # Top-right corner
+            x, y = width - box_size, 0
+        elif i == 2:  # Bottom-left corner
+            x, y = 0, height - box_size
+        else:  # Bottom-right corner
+            x, y = width - box_size, height - box_size
+        
+        # Draw the colored box
+        white_image[y:y+box_size, x:x+box_size] = color
+    
+    return white_image
+
+# Example usage
+image_with_colored_boxes = create_image_with_colored_boxes()
+
+# Display the image with colored boxes
+cv2.imshow('Image with Colored Boxes', image_with_colored_boxes)
+cv2.waitKey(0)
+cv2.destroyAllWindows()

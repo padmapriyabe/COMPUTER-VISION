@@ -1,0 +1,34 @@
+import cv2
+
+# Function to add text to an image
+def add_text_to_image(image_path, text):
+    # Read the image
+    image = cv2.imread(image_path)
+    
+    # Define font settings
+    font = cv2.FONT_HERSHEY_SIMPLEX
+    font_scale = 1
+    font_color = (255, 255, 255)  # White color
+    thickness = 2
+    
+    # Get text size
+    text_size = cv2.getTextSize(text, font, font_scale, thickness)[0]
+    
+    # Calculate text position (centered)
+    text_x = (image.shape[1] - text_size[0]) // 2
+    text_y = (image.shape[0] + text_size[1]) // 2
+    
+    # Add text to the image
+    cv2.putText(image, text, (text_x, text_y), font, font_scale, font_color, thickness)
+    
+    return image
+
+# Example usage
+image_path = 'input_image.jpg'
+user_text = input("Enter the text to be added to the image: ")
+image_with_text = add_text_to_image(image_path, user_text)
+
+# Display the image with text
+cv2.imshow('Image with Text', image_with_text)
+cv2.waitKey(0)
+cv2.destroyAllWindows()

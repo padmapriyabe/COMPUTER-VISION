@@ -1,0 +1,30 @@
+import cv2
+
+# Function to subtract foreground based on color levels
+def subtract_foreground(image_path):
+    # Read the input image
+    image = cv2.imread(image_path)
+    
+    # Create a background subtractor object
+    subtractor = cv2.createBackgroundSubtractorMOG2()
+    
+    # Apply background subtraction to the image
+    foreground_mask = subtractor.apply(image)
+    
+    # Convert the foreground mask to binary
+    _, binary_mask = cv2.threshold(foreground_mask, 128, 255, cv2.THRESH_BINARY)
+    
+    # Apply the binary mask to the original image to extract the foreground
+    foreground = cv2.bitwise_and(image, image, mask=binary_mask)
+    
+    return foreground
+
+# Example usage
+image_path = 'input_image.jpg'
+foreground = subtract_foreground(image_path)
+
+# Display the original image and the foreground
+cv2.imshow('Original Image', cv2.imread(image_path))
+cv2.imshow('Foreground', foreground)
+cv2.waitKey(0)
+cv2.destroyAllWindows()

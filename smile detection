@@ -1,0 +1,29 @@
+import cv2
+
+# Load pre-trained smile detection model
+smile_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_smile.xml')
+
+# Function to detect smiles in an image
+def detect_smiles(image):
+    # Convert image to grayscale
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    
+    # Detect smiles in the image
+    smiles = smile_cascade.detectMultiScale(gray, 1.8, 20)
+    
+    # Draw rectangles around the detected smiles
+    for (x, y, w, h) in smiles:
+        cv2.rectangle(image, (x, y), (x+w, y+h), (0, 255, 0), 2)
+    
+    return image
+
+# Load image
+image = cv2.imread('image.jpg')
+
+# Detect smiles in the image
+image_with_smiles = detect_smiles(image)
+
+# Display the image with detected smiles
+cv2.imshow('Smile Detection', image_with_smiles)
+cv2.waitKey(0)
+cv2.destroyAllWindows()

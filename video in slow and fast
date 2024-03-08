@@ -1,0 +1,16 @@
+import cv2
+video_path = "C:/Users/padmapriya/OneDrive/Pictures/boat.mp4"
+cap = cv2.VideoCapture(video_path)
+fps = cap.get(cv2.CAP_PROP_FPS)
+cv2.namedWindow('Video', cv2.WINDOW_NORMAL)
+ret, frame = cap.read()
+
+while ret:
+    cv2.imshow('Video', frame)
+    speed_factor = 0.5
+    wait_time = int(1000 / (fps * speed_factor))
+    if cv2.waitKey(wait_time) & 0xFF == ord('q'):
+        break
+    ret, frame = cap.read()
+cap.release()
+cv2.destroyAllWindows()

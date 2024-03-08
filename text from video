@@ -1,0 +1,37 @@
+import cv2
+import pytesseract
+
+# Function to extract text from a video
+def extract_text_from_video(video_path):
+    # Open the video file
+    video = cv2.VideoCapture(video_path)
+    
+    # Initialize text variable to store extracted text
+    extracted_text = ""
+    
+    # Loop through each frame in the video
+    while video.isOpened():
+        ret, frame = video.read()
+        
+        # Check if frame is read successfully
+        if not ret:
+            break
+        
+        # Convert frame to grayscale
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        
+        # Use Tesseract OCR to extract text from the frame
+        text = pytesseract.image_to_string(gray)
+        
+        # Append extracted text to the overall text
+        extracted_text += text + "\n"
+    
+    # Release the video capture object
+    video.release()
+    
+    return extracted_text
+
+# Example usage
+video_path = 'video.mp4'
+extracted_text = extract_text_from_video(video_path)
+print(extracted_text)
